@@ -11,11 +11,11 @@ server.use(express.json());
 
 const auth=(req,res,next)=>{
     // console.log(req.method, req.ip, req.hostname, req.get("User-Agent"));
-    console.log("-------start----------")
+    console.log("-------start----------");
     console.log(req.query);
     console.log(req.body);
     console.log(req.params);
-    console.log("-------end---------")
+    console.log("-------end---------");
     // if(req.query.password=="123")//queryParameters
     // if(req.body.password=="123")//bodyParameters
     if(req.params.password=="123")//paramsParameters
