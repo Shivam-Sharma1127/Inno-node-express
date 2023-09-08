@@ -31,56 +31,59 @@ const auth=(req,res,next)=>{
 //     res.json({type:"GET"})
 // })
 
-
-// C R U D APIs
-
-// Create Post /products
-server.post("/products",(req,res)=>{
+const createProducts=(req,res)=>{
     console.log(req.body)
     products.push(req.body)
     res.json(req.body)
-})
-
-//Read GET Products
-server.get("/products",(req,res)=>{
+}
+const getAllProducts=(req,res)=>{
     res.json(products);
-})
-
-//Read GET Product/:id
-server.get("/products/:id",(req,res)=>{
+}
+const getProduct=(req,res)=>{
     const id= +req.params.id;
     const product=products.find((p)=>p.id===id)
     res.json(product);
-})
-
-//Update PUT Products/:id
-server.put("/products/:id",(req,res)=>{
+}
+const replaceProducts=(req,res)=>{
     const id= +req.params.id;
     const productIndex=products.findIndex((p)=>p.id===id)
     console.log(productIndex)
     products.splice(productIndex,1,{...req.body,id:id})
     res.status(201).json({json:"Updated"});
-})
-
-
-//Update PATCH Products/:id
-server.patch("/products/:id",(req,res)=>{
+}
+const updateProducts=(req,res)=>{
     const id= +req.params.id;
     const productIndex=products.findIndex((p)=>p.id===id)
     const product=products[productIndex]
     products.splice(productIndex,1,{...product,...req.body})
     res.status(201).json({json:"UpdatedOnly"});
-})
-
-//Delete DELETE Products/:id
-
-server.delete("/products/:id",(req,res)=>{
+}
+const deleteProducts=(req,res)=>{
     const id= +req.params.id;
     const productIndex=products.findIndex((p)=>p.id===id)
     const product=products[productIndex]
     products.splice(productIndex,1)
     res.json({...product,json:"Deleted id ="+id});
-})
+}
+// C R U D APIs
+
+// Create Post /products
+server.post("/products",createProducts)
+
+//Read GET Products
+server.get("/products",getAllProducts)
+
+//Read GET Product/:id
+server.get("/products/:id",getProduct)
+
+//Update PUT Products/:id
+server.put("/products/:id",replaceProducts)
+
+//Update PATCH Products/:id
+server.patch("/products/:id",updateProducts)
+
+//Delete DELETE Products/:id
+server.delete("/products/:id",deleteProducts)
 
 
 server.listen(8080,()=>{
